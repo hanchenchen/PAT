@@ -1,4 +1,4 @@
-# 1009
+# 1009 Product of Polynomials
 
 ```c++
 #include <iostream>
