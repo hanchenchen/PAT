@@ -1,4 +1,4 @@
-# 1002
+# 1002 A+B for Polynomials
 
 ```c++
 #include<iostream>
