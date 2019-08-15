@@ -1,4 +1,4 @@
-# ?**1104** **Sum of Number Segments** 
+# **1104** **Sum of Number Segments** 
 
 1. ac
 
@@ -41,4 +41,4 @@
    
    ```
 
-   
+1. int double 之间的运算要记得加强制转换
