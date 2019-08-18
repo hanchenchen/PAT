@@ -1,8 +1,10 @@
 # **1078** **Hashing**
 
-1. 第`i`个查找位置`Ni=(x+i*i)%TSize`，`TSize`为表长。
+1. 第`i`个查找位置`Ni=(x+i*i)%TSize`，`TSize`为表长
 
 2. 查找`TSize`个位置后结束查找，而非`x+i*i`>`TSize`时
+
+3. `1`既不是合数也不是素数
 
    ```c++
    #include<iostream>
