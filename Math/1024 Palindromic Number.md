@@ -32,4 +32,49 @@
    }
    ```
 
-2. 1
+2. AC
+
+   ```c++
+   #include<iostream>
+   #include<math.h>
+   using namespace std;
+   string reverse(string x){
+       string n="";
+       int i=0;
+       for(;i<x.size();i++){
+           n=x[i]+n;
+       }i=0;
+       while(n[i]=='0')i++;
+       return n.substr(i);
+   }
+   void add(string &s1,string s2){
+       int c=0;string num="";
+       int x=0;
+       while(s2.size()<s1.size())s2='0'+s2;
+       for(int i=(int)s1.size()-1;i>=0;i--){
+           x=s1[i]+s2[i]-2*'0'+c;
+           c=x/10;
+           x=x%10;
+           s1[i]=x+'0';
+       }
+       if(c)s1=(char)('0'+c)+s1;
+   }
+   int main(){
+       string n;
+       int k;
+       cin>>n>>k;
+       int i;
+       for(i=0;i<k;i++){
+           if(reverse(n)==n){
+               cout<<n<<endl<<i;
+               return 0;
+           }
+           add(n,reverse(n));
+       }
+       cout<<n<<endl<<i;
+       return 0;
+   }
+   
+   ```
+
+   
