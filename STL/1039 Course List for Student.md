@@ -84,6 +84,15 @@
 
 4.  把`cin\cout `换成`scanf\printf` ,AC
 
+      | Case | Result   | Run Time | Memory   |
+      | ---- | -------- | -------- | -------- |
+      | 0    | Accepted | 3 ms     | 512 KB   |
+      | 1    | Accepted | 2 ms     | 512 KB   |
+      | 2    | Accepted | 3 ms     | 384 KB   |
+      | 3    | Accepted | 3 ms     | 384 KB   |
+      | 4    | Accepted | 3 ms     | 384 KB   |
+      | 5    | Accepted | 446 ms   | 22784 KB |
+      
       ```c++
       #include<iostream>
       #include<algorithm>
@@ -123,6 +132,66 @@
       }
       ```
 
-5. 1
-6. 2
-7. 
+5. `Hash`
+
+   | Submit Time         | Status   | Score | Problem                                                      | Compiler  | Run Time | User |
+   | ------------------- | -------- | ----- | ------------------------------------------------------------ | --------- | -------- | ---- |
+   | 8/19/2019, 20:33:47 | Accepted | 25    | [1039](https://pintia.cn/problem-sets/994805342720868352/problems/994805447855292416) | C++ (g++) | 285 ms   | cc   |
+
+   | Case | Result   | Run Time | Memory   |
+   | ---- | -------- | -------- | -------- |
+   | 0    | Accepted | 13 ms    | 11048 KB |
+   | 1    | Accepted | 13 ms    | 11048 KB |
+   | 2    | Accepted | 11 ms    | 10976 KB |
+   | 3    | Accepted | 10 ms    | 11008 KB |
+   | 4    | Accepted | 10 ms    | 11048 KB |
+   | 5    | Accepted | 285 ms   | 17536 KB |
+
+   ```c++
+   #include<iostream>
+   #include<algorithm>
+   //#include<map>
+   #include<vector>
+   using namespace std;
+   const int MAX=26*26*26*26+1;
+   vector<int> v[MAX];
+   int getnum(string s){
+       int x=0;
+       for(int i=0;i<3;i++){
+           x*=26;
+           x+=(s[i]-'A');
+       }
+       x*=26;
+       x+=s[3]-'0';
+       return x;
+   }
+   int main(){
+       int n,k;
+       scanf("%d %d",&n,&k);
+       for(int i=0;i<k;i++){
+           int course,stu;
+           scanf("%d %d",&course,&stu);
+           for(int j=0;j<stu;j++){
+               string name;
+               cin>>name;
+               v[getnum(name)].push_back(course);
+           }
+       }
+       for(int i=0;i<n;i++){
+           string name;
+           cin>>name;
+           int x=getnum(name);
+           cout<<name<<" "<<v[x].size();
+           sort(v[x].begin(),v[x].end());
+           for(int j=0;j<v[x].size();j++){
+               printf(" %d",v[x][j]);
+           }
+           printf("\n");
+       }
+       return 0;
+   }
+   
+   ```
+
+   
+
