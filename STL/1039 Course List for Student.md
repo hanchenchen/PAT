@@ -1,6 +1,8 @@
 # 1039 Course List for Student
 
-1. `if(n==0)return 0;` （最后一个测试用例）
+1. `Map` + `Vector`
+
+2. `if(n==0)return 0;` （最后一个测试用例）
 
    ```c++
    #include<iostream>
