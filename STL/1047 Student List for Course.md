@@ -42,6 +42,8 @@
 
 2. AC
 
+   ⚠️：vector push `char*`，放入的是地址，之后对`char*`的修改，会改变`vector`的值。
+
    ```c++
    #include<iostream>
    #include<algorithm>
