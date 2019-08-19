@@ -71,7 +71,7 @@
                for(int i=0;i<4;i++){
                    if(a[i]==b[i])continue;
                    return a[i]<b[i];
-               }
+               }//return strcmp(a,b)<0;
                return false;
            });
            for(int j=0;j<v[i].size();j++){
@@ -82,7 +82,7 @@
    }
    ```
 
-3. `Hash`?
+   
 
 
 
