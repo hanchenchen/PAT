@@ -23,7 +23,6 @@
    #include<string.h>
    using namespace std;
    map<string,int> m;
-   string arr[200];
    int main(){
        int k,n;
        cin>>k>>n;
@@ -71,7 +70,6 @@
    #include<string.h>
    using namespace std;
    map<string,int> m;
-   string arr[200];
    int main(){
        int k,n;
        cin>>k>>n;
