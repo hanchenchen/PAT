@@ -98,4 +98,40 @@
    }
    ```
 
-4. 1
+4. 因为`ans`的个数是大于一半的，所以即使 用`ans`与其他数两两抵消，`ans`还有剩余
+
+   | Submit Time         | Status   | Score | Problem                                                      | Compiler  | Run Time | User |
+   | ------------------- | -------- | ----- | ------------------------------------------------------------ | --------- | -------- | ---- |
+   | 8/21/2019, 12:44:02 | Accepted | 20    | [1054](https://pintia.cn/problem-sets/994805342720868352/problems/994805422639136768) | C++ (g++) | 81 ms    | cc   |
+
+   | Case | Result   | Run Time | Memory |
+   | ---- | -------- | -------- | ------ |
+   | 0    | Accepted | 4 ms     | 384 KB |
+   | 1    | Accepted | 4 ms     | 384 KB |
+   | 2    | Accepted | 81 ms    | 384 KB |
+   | 3    | Accepted | 7 ms     | 424 KB |
+   | 4    | Accepted | 3 ms     | 384 KB |
+
+   ```c++
+   #include<iostream>
+   #include<algorithm>
+   #include<map>
+   #include<string.h>
+   using namespace std;
+   int main(){
+       int k,n;
+       cin>>k>>n;
+       long long s;
+       int num=0;long long ans=-1;
+       for(int i=0;i<k*n;i++){
+           scanf("%lld",&s);
+           if(s==ans)num++;
+           else num--;
+           if(num==0)ans=s;
+       }
+       cout<<s<<endl;
+       return 0;
+   }
+   ```
+
+5. 1
