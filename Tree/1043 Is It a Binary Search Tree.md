@@ -1,5 +1,8 @@
 # 1043 Is It a Binary Search Tree
 
+1. 以BST^1^的先序遍历的次序，依次插入BST^2^，那么BST^1^==BST^2^
+2. 先序遍历的结果为 ： 根 左子树（小于根） 右子树（大于等于根），找到右子树的位置，再把左子树和右子树放入递归。如果左右皆满足BST规则，则该树为BST
+
 ```c++
 #include<iostream>
 #include<string.h>
