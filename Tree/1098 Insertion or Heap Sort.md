@@ -14,29 +14,68 @@
 ```c++
 #include<iostream>
 #include<vector>
+#include<algorithm>
+using namespace std;
 vector<int> initial;
 vector<int> ordered;
-bool ifHeap(vector<int> init){
-
-}
-bool ifInsert(vector<int> init){
-    int i=0;
-    while(i<initial.size()&&init[i]==ordered[i])i++;
-    while(i<initial.size()&&init[i]==initial[i])i++;
-    if(i==initial.size())
-    for(int i=0;i<;i++){
-        if(&&init[i]!=)
+bool ifHeap(vector<int> mid){
+    int i=(int)initial.size()-1;
+    while(i>0&&mid[i]==ordered[i])i--;
+    int index=i;
+    int temp=mid[index];
+    mid[index]=mid[1];
+    mid[1]=temp;
+    i=1;int j=2;
+    while(j<index){
+        if(j+1<index&&mid[j+1]>mid[j]){
+            j=j+1;
+        }
+        if(mid[j]>temp){
+            mid[i]=mid[j];
+            i=j;j=2*i;
+        }else
+            break;
     }
+    mid[i]=temp;
+    cout<<"Heap Sort"<<endl<<mid[1];
+    for(i=2;i<mid.size();i++){
+        cout<<" "<<mid[i];
+    }
+    return true;
+}
+bool ifInsert(vector<int> mid){
+    int i=0;
+    for(i=1;i<(int)mid.size();i++){
+        if(mid[i]<mid[i-1])break;
+    }
+    int index=i;
+    for(;i<(int)mid.size();i++)if(mid[i]!=initial[i])return false;
+    sort(mid.begin()+1,mid.begin()+index+1);
+    cout<<"Insertion Sort"<<endl<<mid[1];
+    for(i=2;i<mid.size();i++){
+        cout<<" "<<mid[i];
+    }
+    return true;
 }
 int main(){
     int n,x;
     cin>>n;
+    initial.push_back(0);
+    vector<int> mid;
+    mid.push_back(0);
     for(int i=0;i<n;i++){
         cin>>x;
-        initial.push(x);
-        }
-        ordered=initial;
-        sort(ordered.begin(),ordered.end());
+        initial.push_back(x);
+    }
+    for(int i=0;i<n;i++){
+        cin>>x;
+        mid.push_back(x);
+    }
+    ordered=initial;
+    sort(ordered.begin()+1,ordered.end());
+    if(!ifInsert(mid))ifHeap(mid);
+    return 0;
 }
+
 ```
 
