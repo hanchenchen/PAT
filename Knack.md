@@ -29,7 +29,17 @@
 
 9. `String` `Map`的参数传递较慢，尽可能在函数传参中加入引用
 
-10. 1
+10. `fill()` 、`memset()`
+
+   <algorithm>
+
+      1. `fill(memory[0],memory[0]+1000*1000,0);`
+         - `memory[1000][1000]`首地址为`memory[0]`
+      2. `memset(memory,0,sizeof(memory));`
+         - 按字节赋值，只用于0、-1
+         - sizeof(int)==4
+
+11. 1
 
 #### Reference
 
