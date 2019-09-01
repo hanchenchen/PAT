@@ -371,3 +371,215 @@ int main(){
 
 ```
 
+```c++
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<set>
+#include<algorithm>
+using namespace std;
+const int maxN=10005;
+const int maxINT=2147483647;
+const int maxK=105;
+int getSecond(int hh,int mm,int ss){
+    return hh*60*60+mm*60+ss;
+}
+int stTime=getSecond(8,0,0);
+int edTime=getSecond(21,0,0);
+struct PLAYER{
+    int vip=0;
+    int usingTime=0;
+    int comeTime=0;
+    int endTime=0;
+}player[maxN];
+struct TABLE{
+    int endTime=stTime;
+    int num=0;
+    int vip=0;
+}table[maxK];
+queue<int> pt;
+queue<int> vip;
+set<TABLE> pTable;
+set<TABLE> vipTable;
+void output(int t1,int t2){
+    if(t1>=t2){
+        printf("%02d:%02d:%02d %02d:%02d:%02d 0\n",
+               t1/3600,(t1%3600)/60,t1%60,
+               t1/3600,(t1%3600)/60,t1%60);
+        return;
+    }
+    int x=t2-t1;
+    printf("%02d:%02d:%02d %02d:%02d:%02d %d\n",
+           t1/3600,(t1%3600)/60,t1%60,
+           t2/3600,(t2%3600)/60,t2%60,
+           (x+30)/60);
+}
+int times[maxK]={0};
+int main(){
+    int n,m,k=0;
+    cin>>n;
+    int hh,mm,ss;
+    for(int i=1;i<=n;i++){
+        scanf("%d:%d:%d ",&hh,&mm,&ss);
+        player[i].comeTime=getSecond(hh,mm,ss);
+        cin>>player[i].usingTime;
+        if(player[i].usingTime>120)player[i].usingTime=120;
+        player[i].usingTime*=60;
+        cin>>player[i].vip;
+    }
+    sort(player,player+n,[](PLAYER a,PLAYER b)
+         {return a.comeTime<b.comeTime;});
+    cin>>k>>m;
+    int x;
+    for(int i=0;i<m;i++){
+        cin>>x;
+        table[x].vip=1;
+    }
+    for(int i=0;i<k;i++){
+        table[i].num=i+1;//1-k
+        if(table[i].vip)vipTable.insert(table[i]);
+        else pTable.insert(table[i]);
+    }
+    for(int i=0;i<n;i++){
+        if(player[i].vip)vip.push(i);
+        else pt.push(i);
+    }
+    //queue<PLAYER> pt;
+    //queue<PLAYER> vip;
+    //set<TABLE> pTable;
+    //set<TABLE> vipTable;
+    set<TABLE> availTable;
+    set<TABLE> vipAvailTable;
+    queue<int> waiting;
+    queue<int> VIPwaiting;
+    for(int i=getSecond(8,0,0);i<=getSecond(21,0,0);i++){
+        if(i>=pTable.begin()->endTime){
+            availTable.insert(*pTable.begin());
+            pTable.erase(pTable.begin());
+        }
+        if(i>=vipTable.begin()->endTime){
+            vipAvailTable.insert(*vipTable.begin());
+            vipTable.erase(vipTable.begin());
+        }
+        if(i>=player[pt.front()].comeTime){
+            waiting.push(pt.front());
+            pt.pop();
+        }
+        if(i>=player[vip.front()].comeTime){
+            VIPwaiting.push(vip.front());
+            vip.pop();
+        }
+        if(!VIPwaiting.empty()&&!vipAvailTable.empty()){
+            output(player[ VIPwaiting.front()].comeTime, i);
+            VIPwaiting.pop();vipTable.erase(vipTable.begin());
+            times[vipAvailTable.begin()->num]++;
+            continue;
+        }
+        if(player[VIPwaiting.front()].comeTime<=player[waiting.front()].comeTime){
+            if(!vipAvailTable.empty()){
+                
+            }else if(!availTable.empty()){
+                
+            }
+        }
+
+    }
+    for(int j=0;j<n;j++){
+        int tableNum=-1,tableTime=maxINT;
+        int viptableNum=-1,viptableTime=maxINT;
+        for(int i=1;i<=k;i++){
+            if(tableTime>table[i].endTime){
+                tableTime=table[i].endTime;
+                tableNum=i;
+            }
+            if(viptableTime>table[i].endTime&&table[i].vip){
+                viptableTime=table[i].endTime;
+                viptableNum=i;
+            }
+        }
+        PLAYER p;p.comeTime=maxINT;
+        
+        if(tableTime>=edTime)break;
+        if(viptableTime==tableTime){
+            if(!vip.empty()){//vip等候
+                if(tableTime>=vip.front().comeTime){//vip 早于桌子
+                    //cout<<" 1"<<viptableTime<<endl;
+                    output(vip.front().comeTime, tableTime);times[viptableNum]++;
+                    table[viptableNum].endTime=tableTime+vip.front().usingTime;
+                    vip.pop();
+                    continue;
+                }else{
+                    p=vip.front();
+                }
+            }
+            if(!pt.empty()){//普通等候
+                if(tableTime>=pt.front().comeTime){//pt 早于桌子
+                    //cout<<" 2"<<tableNum<<endl;
+                    output(pt.front().comeTime, tableTime);times[tableNum]++;
+                    table[tableNum].endTime=tableTime+pt.front().usingTime;
+                    pt.pop();
+                    continue;
+                }else{//都晚于桌子
+                    if(pt.front().comeTime<p.comeTime){//pt早于vip
+                        p=pt.front();
+                    }else{//vip 早于pt
+                    }
+                }
+            }else{//vip 且无pt等候
+                
+            }
+            if(p.vip){
+                //cout<<" 3.1 "<<viptableTime<<endl;
+                output(vip.front().comeTime, vip.front().comeTime);times[viptableNum]++;
+                table[viptableNum].endTime=vip.front().comeTime+vip.front().usingTime;
+                vip.pop();
+                continue;
+            }else{
+                //cout<<" 3.2 "<<tableNum<<endl;
+                output(p.comeTime, p.comeTime);times[tableNum]++;
+                table[tableNum].endTime=p.comeTime+p.usingTime;
+                pt.pop();
+            }
+            
+        }else{
+            if(!vip.empty()){//vip等候
+                p=vip.front();
+            }
+            if(!pt.empty()){//普通等候
+                if(p.comeTime>pt.front().comeTime){//普通先于 vip
+                    p=pt.front();
+                }
+            }
+            if(p.comeTime==maxINT)continue;
+            if(p.comeTime<tableTime){
+                //cout<<" 4"<<tableNum<<endl;
+                output(p.comeTime, tableTime);times[tableNum]++;
+                table[tableNum].endTime=tableTime+p.usingTime;
+                if(p.vip)vip.pop();
+                else pt.pop();
+            }else{
+                if(p.vip&&viptableTime<=vip.front().comeTime){
+                    //cout<<"! "<<viptableNum<<endl;
+                    output(vip.front().comeTime, vip.front().comeTime);times[viptableNum]++;
+                    table[viptableNum].endTime=vip.front().comeTime+vip.front().usingTime;
+                    vip.pop();
+                    continue;
+                }
+                //cout<<" 5"<<tableNum<<endl;
+                output(p.comeTime, p.comeTime);times[tableNum]++;
+                table[tableNum].endTime=p.comeTime+p.usingTime;
+                if(p.vip)vip.pop();
+                else pt.pop();
+            }
+            
+        }
+    }
+    cout<<times[1];
+    for(int i=2;i<=k;i++){
+        cout<<" "<<times[i];
+    }
+    return 0;
+}
+
+```
+
