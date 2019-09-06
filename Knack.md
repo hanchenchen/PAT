@@ -53,7 +53,7 @@
 
    `INT_MAX` INT_MIN ` `LLONG_MAX` （以9开头的19位数字）
 
-13. `unordered_map``unordered_set` 快
+13. `unordered_map``unordered_set` 快`#include <unordered_map>`
 
 14. `gcd`
 
@@ -82,23 +82,47 @@
 
 17. `atoi` `stoi` 🧷区别🧷
 
-   `#include<cstring>`
-
    `string s`
 
    ##### `atoi`  
 
    1. `atoi()`不会做范围检查，如果超出范围的话，超出上界，则输出上界，超出下界，则输出下界；
-   2. `atoi(s.c_str())`
+   2. `atoi(s.c_str())` `s.c_str():#include<string>`
+   3. `#include<cstdlib>`
 
    ##### `stoi`
 
    1.  stoi()会做范围检查，默认范围是在int的范围内的，如果超出范围的话则会runtime error！
    2.  `stoi(s)`
+   3.  `#include<string>`
 
 18. `next_permutation(a,a+3);`
 
-19. 1
+19. ` is_permutation(v1.begin(), v1.end(), v2.begin());` 
+
+   `is_sorted(begin(a), end(a));`// if non-decreased
+
+20. `cout << *s.rbegin();`//`set<> s`
+
+22. ```c++
+   // sscanf() 从⼀一个字符串串中读进与指定格式相符的数据
+   // sprintf() 字符串串格式化命令，主要功能是把格式化的数据写⼊入某个字符串串中 // 在头⽂文件 #include <string.h>，使⽤用⽅方法:
+   char a[50], b[50];
+   double temp;
+   sscanf(a, "%lf", &temp);
+   sprintf(b, "%.2lf",temp);
+   ```
+
+22. ```c++
+   if(s.find('a', 5) != string::npos)
+       int  index = s.find('a', 5);
+   ```
+
+23. ```c++
+   const double eps = 1e-8;
+   ```
+
+24. 1
 
 #### Reference
 
