@@ -1,6 +1,6 @@
 # **-1026** **Table Tennis**
 
-##### 28/30
+#### 28/30
 
 | Submit Time         | Status             | Score | Problem                                                      | Compiler  | Run Time | User |
 | ------------------- | ------------------ | ----- | ------------------------------------------------------------ | --------- | -------- | ---- |
@@ -579,6 +579,185 @@ int main(){
         cout<<" "<<times[i];
     }
     return 0;
+}
+
+```
+
+
+
+
+
+#### 使用class
+
+```c++
+
+#include"all.h"//#include<bits/stdc++.h>
+using namespace std;
+int getSecond(string time);
+string getTime(int second);
+
+class Player{
+private:
+    int arriveTime;
+    int playTime;
+public:
+    Player(string arriveTime_ = "",int playTime_ = 0);
+    int getArriveTime() const;
+    int getPlayTime() const;
+    bool operator<(const Player& p2) const;
+};
+Player::Player(string arriveTime_ ,int playTime_ ){
+    arriveTime=getSecond(arriveTime_);
+    playTime=playTime_;
+}
+int Player::getArriveTime() const{
+    return arriveTime;
+}
+int Player::getPlayTime() const{
+    return playTime;
+}
+bool Player::operator<(const Player& p2) const{
+    return getArriveTime()<p2.getArriveTime();
+}
+
+const int maxN=10000+5;
+class PlayerList{
+private:
+    int playerNum;
+    Player* list;
+public:
+    PlayerList();
+    void sortList();
+    bool pushBack(Player p);
+    Player* getFront();
+}ordinaryPlayer,VIPplayer;
+PlayerList::PlayerList(){
+    playerNum=0;
+    list=new Player[maxN];
+}
+void PlayerList::sortList(){
+    sort(list,list+playerNum);
+}
+bool PlayerList::pushBack(Player p){
+    if(playerNum>=maxN)return false;
+    list[playerNum++]=p;
+    return true;
+}
+Player* PlayerList::getFront(){
+    if(!playerNum--)return NULL;
+    Player* p=list;
+    list++;
+    return p;
+}
+
+class Table{
+private:
+    int remainTime;
+    int ifVIP;
+public:
+    Table();
+    void setTime(int time);
+    void setVIP();
+    int getTime();
+};
+Table::Table(){
+    remainTime=0;
+    ifVIP=0;
+}
+void Table::setTime(int time){
+    remainTime=time;
+}
+void Table::setVIP(){
+    ifVIP=1;
+}
+int Table::getTime(){
+    return remainTime;
+}
+
+const int maxK=100+5;
+class TableList{
+private:
+    int tableNum;
+    Table* list;
+public:
+    TableList();
+    void setTableNum(int tableNum_);
+    void setVIP(int index);
+    vector<int> findTable();
+    vector<int> getTable(int& currentTime);
+}table;
+TableList::TableList(){
+    tableNum=0;
+    list=new Table[maxK];
+}
+void TableList::setTableNum(int tableNum_){
+    tableNum=tableNum_;
+}
+void TableList::setVIP(int index){
+    list[index].setVIP();
+}
+vector<int> TableList::findTable(){
+    vector<int> tl;
+    for(int i=1;i<=tableNum;i++){
+        if(!list[i].getTime())tl.push_back(i);
+    }
+    return tl;
+}
+vector<int> TableList::getTable(int& currentTime){
+    int minTime=2*60+5;
+    for(int i=1;i<=tableNum;i++){
+        minTime=min(minTime,list[i].getTime());
+    }
+    currentTime+=minTime;
+    for(int i=1;i<=tableNum;i++){
+        list[i].setTime(list[i].getTime()-minTime);
+    }
+    return TableList::findTable();
+}
+
+int main(){
+    int n,k,m;
+    string arriveTime;
+    int playTime,vip;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>arriveTime>>playTime>>vip;
+        if(vip){
+            VIPplayer.pushBack(Player(arriveTimae,playTime));
+        }else{
+            ordinaryPlayer.pushBack(Player(arriveTime,playTime));
+        }
+    }
+    cin>>k>>m;
+    for(int i=0;i<m;i++){
+        cin>>vip;
+        table.setVIP(vip);
+    }
+    int currentTime=getSecond("08:00:00");
+    
+    return 0;
+}
+
+
+
+
+
+int getSecond(string time){
+    int h=(time[0]-'0')*10+time[1]-'0';
+    int m=h*60+(time[3]-'0')*10+time[4]-'0';
+    int s=m*60+(time[6]-'0')*10+time[7]-'0';
+    return s;
+}
+string getTime(int second){
+    int s=second%60;
+    int m=second/60;
+    int h=m/60;
+    m=m%60;
+    string time="00:00:00";
+    time[0]=h/10+'0';time[1]=h%10+'0';
+    time[3]=m/10+'0';time[4]=m%10+'0';
+    time[6]=s/10+'0';time[7]=s%10+'0';
+    return time;
 }
 
 ```

@@ -1,6 +1,6 @@
 # 1140 **Look-and-say Sequence**
 
-```
+```c++
 #include <iostream>
 #include <string.h>
 #include <vector>
