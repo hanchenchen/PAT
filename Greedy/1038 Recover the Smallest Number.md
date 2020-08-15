@@ -36,3 +36,39 @@
        return 0;
    }
    ```
+
+#### Python
+
+```python
+def cmp(a, b):
+    if a + b < b + a:
+        return -1
+    elif a + b > b + a:
+        return 1
+    else:
+        return 0
+
+
+from functools import cmp_to_key
+
+n = input()
+arr = n.split()[1:]
+n = int(n[0])
+if not n:
+    exit(0)
+# arr.sort()
+arr.sort(key=cmp_to_key(cmp), reverse=False)
+# arr.sort()
+ans = ''
+for i in arr:
+    ans+=i
+for i in range(len(ans)):
+    if ans[i]=='0':
+        pass
+    else:
+        ans = ans[i:]
+        print(ans)
+        exit()
+print('0')
+```
+
